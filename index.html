@@ -453,10 +453,14 @@ https://templatemo.com/tm-518-sentra
 
                 let isJumping = false;
 
+                // Event listener para teclado
                 document.addEventListener('keydown', jump);
 
+                // Event listener para toque (touch) em dispositivos móveis
+                document.addEventListener('touchstart', jump);
+
                 function jump(event) {
-                    if ((event.keyCode === 32 || event.keyCode === 38) && !isJumping) {
+                    if ((event.keyCode === 32 || event.keyCode === 38 || event.type === 'touchstart') && !isJumping) {
                         isJumping = true;
                         dino.style.transform = 'translateY(-60px)';
 
