@@ -79,21 +79,21 @@ https://templatemo.com/tm-518-sentra
                         </a>
                     </li>
                     <li>
-                        <a href="#projects">
+                        <a href="#featured">
                             <span class="rect"></span>
                             <span class="circle"></span>
                             Recent Work
                         </a>
                     </li>
                     <li>
-                        <a href="#video">
+                        <a href="#featured">
                             <span class="rect"></span>
                             <span class="circle"></span>
                             Presentation
                         </a>
                     </li>
                     <li>
-                        <a href="#blog">
+                        <a href="#contact">
                             <span class="rect"></span>
                             <span class="circle"></span>
                             Blog Entires
@@ -266,6 +266,90 @@ https://templatemo.com/tm-518-sentra
             typeText();
 
             </script>
+            <!-- jogo da velha -->
+            <h1>Jogo da Velha</h1>
+            <div class="board" id="board"></div>
+            <p id="winner"></p>
+            <script>
+                const board = document.getElementById("board");
+                const winnerText = document.getElementById("winner");
+                let currentPlayer = "X";
+                let gameOver = false;
+
+                // Cria a matriz do tabuleiro
+                const cells = [];
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        const cell = document.createElement("div");
+                        cell.classList.add("cell");
+                        cell.dataset.row = i;
+                        cell.dataset.col = j;
+                        board.appendChild(cell);
+                        cells.push(cell);
+                    }
+                }
+
+                // Função para verificar o vencedor
+                function checkWinner() {
+                    const winningCombos = [
+                        [0, 1, 2],
+                        [3, 4, 5],
+                        [6, 7, 8],
+                        [0, 3, 6],
+                        [1, 4, 7],
+                        [2, 5, 8],
+                        [0, 4, 8],
+                        [2, 4, 6]
+                    ];
+
+                    for (const combo of winningCombos) {
+                        const [a, b, c] = combo;
+                        if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
+                            return cells[a].textContent;
+                        }
+                    }
+
+                    if ([...cells].every(cell => cell.textContent !== "")) {
+                        return "Empate!";
+                    }
+
+                    return null;
+                }
+
+                // Função para lidar com os cliques nas células
+                function handleCellClick(event) {
+                    if (gameOver || event.target.textContent !== "") {
+                        return;
+                    }
+
+                    event.target.textContent = currentPlayer;
+                    const winner = checkWinner();
+
+                    if (winner) {
+                        winnerText.textContent = `Vencedor: ${winner}`;
+                        gameOver = true;
+                    } else {
+                        currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    }
+                }
+
+                // Adiciona o ouvinte de clique a todas as células
+                cells.forEach(cell => cell.addEventListener("click", handleCellClick));
+                 // Reiniciar o jogo
+                    function restartGame() {
+                        cells.forEach(cell => {
+                            cell.textContent = "";
+                        });
+                        winnerText.textContent = "";
+                        currentPlayer = "X";
+                        gameOver = false;
+                    }
+
+                    createBoard();
+                    cells.forEach(cell => cell.addEventListener("click", handleCellClick));
+            </script>
+
+
             <section id="blog" class="content-section">
                 <div class="section-heading">
                    <em>Meu</em>
